@@ -7,9 +7,11 @@ RSNetworking is the start of a networking library written entirly for the Swift 
 
 You can read my blog post for additional information about this update:  
 
-If you receive an error like this:  
+If you receive an error like this: 
+``` 
       NSURLSession/NSURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9824)
       Error : Error Domain=NSURLErrorDomain Code=-1200 "An SSL error has occurred and a secure connection to the server cannot be made."
+```
 You are running into App Transport Security which enforces best practices for secure connections.  This is the default for iOS9 and OX X 10.11.  ATS requires communication over HTTPS and the use of TLS 1.2.  One thing to note, Apple's own iTunes API (as shown in the example code) does not support TLS 1.2 so you will get this error connecting to the iTunes API.  To correct this issue, you need to add the following lines to your apps infor.plist file:
 
     <key>NSAppTransportSecurity</key>
