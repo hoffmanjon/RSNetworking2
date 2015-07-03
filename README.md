@@ -9,16 +9,18 @@ You can read my blog post for additional information about this update:
 
 If you receive an error like this: 
 ``` 
-      NSURLSession/NSURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9824)
-      Error : Error Domain=NSURLErrorDomain Code=-1200 "An SSL error has occurred and a secure connection to the server cannot be made."
+  NSURLSession/NSURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9824)
+  Error : Error Domain=NSURLErrorDomain Code=-1200 "An SSL error has occurred and 
+  a secure connection to the server cannot be made."
 ```
 You are running into App Transport Security which enforces best practices for secure connections.  This is the default for iOS9 and OX X 10.11.  ATS requires communication over HTTPS and the use of TLS 1.2.  One thing to note, Apple's own iTunes API (as shown in the example code) does not support TLS 1.2 so you will get this error connecting to the iTunes API.  To correct this issue, you need to add the following lines to your apps infor.plist file:
-
-    <key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsArbitraryLoads</key>
-        <true/>
-    </dict>
+```
+   <key>NSAppTransportSecurity</key>
+   <dict>
+       <key>NSAllowsArbitraryLoads</key>
+       <true/>
+   </dict>
+```
 
 ------------
 
@@ -112,104 +114,104 @@ Sample code for Networking Library
 #### dataFromURL
 ```
 
-        let client = RSURLRequest()
-        
-        if let testURL = NSURL(string:"https://itunes.apple.com/search?term=jimmy+buffett&media=music") {
-            
-            client.dataFromURL(testURL, completionHandler: {(response : NSURLResponse!, responseData: NSData!, error: NSError!) -> Void in
-                if let error = error {
-                    print("Error : \(error)")
-                } else {
-                    let string = NSString(data: responseData, encoding: NSUTF8StringEncoding)
-                    print("Response Data: \(string)")
-                }
-            }) 
-        }
+  let client = RSURLRequest()
+  
+  if let testURL = NSURL(string:"https://itunes.apple.com/search?term=jimmy+buffett&media=music") {
+      
+      client.dataFromURL(testURL, completionHandler: {(response : NSURLResponse!, responseData: NSData!, error: NSError!) -> Void in
+          if let error = error {
+              print("Error : \(error)")
+          } else {
+              let string = NSString(data: responseData, encoding: NSUTF8StringEncoding)
+              print("Response Data: \(string)")
+          }
+      }) 
+  }
 ```
         
 #### dictionaryFromJsonURL
 ```
 
-        let client = RSURLRequest()
-        
-        if let testURL = NSURL(string:"https://itunes.apple.com/search?term=jimmy+buffett&media=music") {
-            
-            client.dictionaryFromJsonURL(testURL, completionHandler: {(response : NSURLResponse!, responseDictionary: NSDictionary!, error: NSError!) -> Void in
-                if let error = error {
-                    print("Error : \(error)")
-                } else {
-                    print("Response Dictionary: \(responseDictionary)")
-                }
-            })
-        }
+  let client = RSURLRequest()
+  
+  if let testURL = NSURL(string:"https://itunes.apple.com/search?term=jimmy+buffett&media=music") {
+      
+      client.dictionaryFromJsonURL(testURL, completionHandler: {(response : NSURLResponse!, responseDictionary: NSDictionary!, error: NSError!) -> Void in
+          if let error = error {
+              print("Error : \(error)")
+          } else {
+              print("Response Dictionary: \(responseDictionary)")
+          }
+      })
+  }
 ```
 
 #### stringFromURL  
 ```     
 
-        let client = RSURLRequest()
-        
-        if let testURL = NSURL(string:"https://itunes.apple.com/search?term=jimmy+buffett&media=music") {
-            
-            client.stringFromURL(testURL, completionHandler: {(response : NSURLResponse!, responseString: NSString!, error: NSError!) -> Void in
-                if let error = error {
-                    print("Error : \(error)")
-                } else {
-                    print("Response Data: \(responseString)")
-                }
-            })
-        }
+  let client = RSURLRequest()
+  
+  if let testURL = NSURL(string:"https://itunes.apple.com/search?term=jimmy+buffett&media=music") {
+      
+      client.stringFromURL(testURL, completionHandler: {(response : NSURLResponse!, responseString: NSString!, error: NSError!) -> Void in
+          if let error = error {
+              print("Error : \(error)")
+          } else {
+              print("Response Data: \(responseString)")
+          }
+      })
+  }
 ```
  
 #### imageFromURL  
 ```         
 
-        let client = RSURLRequest()
-        
-        if let imageURL = NSURL(string:"http://a1.mzstatic.com/us/r30/Music/y2003/m12/d17/h16/s05.whogqrwc.100x100-75.jpg") {
-            
-            client.imageFromURL(imageURL, completionHandler: {(response : NSURLResponse!, image: UIImage!, error: NSError!) -> Void in
-                if let error = error {
-                    print("Error : \(error)")
-                } else {
-                    self.imageView?.image = image;
-                }
-            })
-        }
+  let client = RSURLRequest()
+  
+  if let imageURL = NSURL(string:"http://a1.mzstatic.com/us/r30/Music/y2003/m12/d17/h16/s05.whogqrwc.100x100-75.jpg") {
+      
+      client.imageFromURL(imageURL, completionHandler: {(response : NSURLResponse!, image: UIImage!, error: NSError!) -> Void in
+          if let error = error {
+              print("Error : \(error)")
+          } else {
+              self.imageView?.image = image;
+          }
+      })
+  }
 ```
 
 #### RSUtilities.isHostnameReachable
 ```
 
-				if (RSUtilities.isNetworkAvailable("www.apple.com")) {
-            print("reachable")
-        } else {
-            print("Not Reachable")
-        }
+  if (RSUtilities.isNetworkAvailable("www.apple.com")) {
+      print("reachable")
+  } else {
+      print("Not Reachable")
+  }
 ```
         
 #### UIImageView:  setImageForURL
 ```
 
-				let imageURL = "http://a1.mzstatic.com/us/r30/Music/y2003/m12/d17/h16/s05.whogqrwc.100x100-75.jpg"
-				imageView.setImageForURL(imageURL, placeHolder: UIImage(named: "loading"))	
-				
-				or
-				
-				let imageURL = "http://a1.mzstatic.com/us/r30/Music/y2003/m12/d17/h16/s05.whogqrwc.100x100-75.jpg"
-        self.imageView?.setImageForURL(imageURL)
+  let imageURL = "http://a1.mzstatic.com/us/r30/Music/y2003/m12/d17/h16/s05.whogqrwc.100x100-75.jpg"
+  imageView.setImageForURL(imageURL, placeHolder: UIImage(named: "loading"))	
+  
+  or
+  
+  let imageURL = "http://a1.mzstatic.com/us/r30/Music/y2003/m12/d17/h16/s05.whogqrwc.100x100-75.jpg"
+  self.imageView?.setImageForURL(imageURL)
 ```
 
 #### UIButton:  setImageForURL
 ```
 
-				let imageURL = "http://a1.mzstatic.com/us/r30/Music/y2003/m12/d17/h16/s05.whogqrwc.100x100-75.jpg"
-				button.setButtonImageForURL(url, placeHolder: UIImage(named: "loading"), state:.Normal)
-				
-				or
-				
-				let imageURL = "http://a1.mzstatic.com/us/r30/Music/y2003/m12/d17/h16/s05.whogqrwc.100x100-75.jpg"
-				button.setButtonImageForURL(url, state:.Normal)
+  let imageURL = "http://a1.mzstatic.com/us/r30/Music/y2003/m12/d17/h16/s05.whogqrwc.100x100-75.jpg"
+  button.setButtonImageForURL(url, placeHolder: UIImage(named: "loading"), state:.Normal)
+  
+  or
+  
+  let imageURL = "http://a1.mzstatic.com/us/r30/Music/y2003/m12/d17/h16/s05.whogqrwc.100x100-75.jpg"
+  button.setButtonImageForURL(url, state:.Normal)
 ```
 
 
@@ -220,49 +222,49 @@ RSTransactionRequest is designed to be used when you need to create mulitple req
 ####dictionaryFromRSTransaction
 ```
 
-		let rsRequest = RSTransactionRequest()
-        
-    //Create the initial request
-    let rsTransGet = RSTransaction(transactionType: RSTransactionType.GET, baseURL: "https://itunes.apple.com", path: "search", parameters: ["term":"jimmy+buffett","media":"music"])
-    
-    rsRequest.dictionaryFromRSTransaction(rsTransGet, completionHandler: {(response : NSURLResponse!, responseDictionary: NSDictionary!, error: NSError!) -> Void in
-        if let error = error {
-            print("Error : \(error)")
-        } else {
-            print(responseDictionary)
-        }
-    })
-    
+  let rsRequest = RSTransactionRequest()
+      
+  //Create the initial request
+  let rsTransGet = RSTransaction(transactionType: RSTransactionType.GET, baseURL: "https://itunes.apple.com", path: "search", parameters: ["term":"jimmy+buffett","media":"music"])
+  
+  rsRequest.dictionaryFromRSTransaction(rsTransGet, completionHandler: {(response : NSURLResponse!, responseDictionary: NSDictionary!, error: NSError!) -> Void in
+      if let error = error {
+          print("Error : \(error)")
+      } else {
+          print(responseDictionary)
+      }
+  })
+  
     
 ```            
 
 Now that you have the RSTransaction, you can simply change the parameters and make another request, if needed, like this:
 ```
 
-		let rsRequest = RSTransactionRequest()
-		
-		//Create the initial request
-    rsTransGet.parameters = ["term":"Jimmy", "media":"music"]
-    rsRequest.dictionaryFromRSTransaction(rsTransGet, completionHandler: {(response : NSURLResponse!, responseDictionary: NSDictionary!, error: NSError!) -> Void in
-        if let error = error {
-            print("Error : \(error)")
-        } else {
-            print(responseDictionary)
-        }
-    })
+  let rsRequest = RSTransactionRequest()
+  
+  //Create the initial request
+  rsTransGet.parameters = ["term":"Jimmy", "media":"music"]
+  rsRequest.dictionaryFromRSTransaction(rsTransGet, completionHandler: {(response : NSURLResponse!, responseDictionary: NSDictionary!, error: NSError!) -> Void in
+      if let error = error {
+          print("Error : \(error)")
+      } else {
+          print(responseDictionary)
+      }
+  })
 ```
 
 ####stringFromRSTransaction
 ```
 
-		//Change parameters from the previously example so we can make a second request
-    rsTransGet.parameters = ["term":"Jimmy", "media":"music"]
-    rsRequest.stringFromRSTransaction(rsTransGet, completionHandler: {(response : NSURLResponse!, responseString: NSString!, error: NSError!) -> Void in
-        if let error = error {
-            print("Error : \(error)")
-        } else {
-            print(responseString)
-        }
-    })
+  //Change parameters from the previously example so we can make a second request
+  rsTransGet.parameters = ["term":"Jimmy", "media":"music"]
+  rsRequest.stringFromRSTransaction(rsTransGet, completionHandler: {(response : NSURLResponse!, responseString: NSString!, error: NSError!) -> Void in
+      if let error = error {
+          print("Error : \(error)")
+      } else {
+          print(responseString)
+      }
+  })
 ``` 
 
