@@ -83,7 +83,6 @@ RSUtilities will contain various utilities that do not have their own class.  Cu
 
 #####Functions  
 
-* isHostnameReachable(hostname: NSString) -> Bool - WILL BE DEPRECIATED SOON.  This function will check to see if a host is available or not.  This is a class function.
 * isNetworkAvailable(hostname: NSString) -> Bool  -  This function will check to see if the network is available.  This is a class function.
 * networkConnectionType(hostname: NSString) -> ConnectionType  -  This function will return the type of network connection that is available.  The ConnectionType is an enum which can equal one of the following three types:  NONETWORK, MOBILE3GNETWORK or WIFINETWORK.
 
