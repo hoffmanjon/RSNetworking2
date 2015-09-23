@@ -32,7 +32,7 @@ class RSURLRequest: NSObject {
         _ = urlSession.dataTaskWithRequest(request, completionHandler: {(responseData: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             
             handler(response,responseData,error)
-        })!.resume();
+        }).resume();
         
     }
     

@@ -133,7 +133,7 @@ class RSTransactionRequest: NSObject {
         for (key, value) in dict {
             parts.append(urlEncode(key) + "=" + urlEncode(value));
         }
-        return "&".join(parts)
+        return parts.joinWithSeparator("&")
 
     }
 }

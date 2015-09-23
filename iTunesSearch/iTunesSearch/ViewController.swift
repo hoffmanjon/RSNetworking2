@@ -43,7 +43,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func search(AnyObject) {
+    @IBAction func search(_: AnyObject) {
         
         //Get text for search
         let text: String = searchTextField.text!;

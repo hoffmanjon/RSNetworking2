@@ -52,7 +52,7 @@ class RSTransactionRequest: NSObject {
         urlSession.dataTaskWithRequest(request, completionHandler: {(responseData: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             
             handler(response,responseData,error)
-        })!.resume()
+        }).resume()
     }
     
     private func dataFromRSTransactionGet(transaction: RSTransaction, completionHandler handler: dataFromRSTransactionCompletionClosure)
@@ -71,7 +71,7 @@ class RSTransactionRequest: NSObject {
         urlSession.dataTaskWithRequest(request, completionHandler: {(responseData: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             
             handler(response,responseData,error)
-        })!.resume()
+        }).resume()
     }
     
     func stringFromRSTransaction(transaction: RSTransaction, completionHandler handler: stringFromRSTransactionCompletionClosure) {
@@ -133,7 +133,7 @@ class RSTransactionRequest: NSObject {
         for (key, value) in dict {
             parts.append(urlEncode(key) + "=" + urlEncode(value));
         }
-        return "&".join(parts)
+        return parts.joinWithSeparator("&")
 
     }
 }
