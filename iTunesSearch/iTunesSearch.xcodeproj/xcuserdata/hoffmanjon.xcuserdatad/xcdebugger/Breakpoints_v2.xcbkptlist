@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iTunesSearch/RSNetworking/RSURLRequest.swift"
-            timestampString = "457564906.363372"
+            timestampString = "464737394.602644"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
             landmarkName = "dictionaryFromJsonURL(_:completionHandler:)"
             landmarkType = "5">
          </BreakpointContent>

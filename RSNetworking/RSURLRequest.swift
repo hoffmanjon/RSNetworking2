@@ -23,16 +23,15 @@ class RSURLRequest: NSObject {
     
     func dataFromURL(url : NSURL, completionHandler handler: dataFromURLCompletionClosure) {
         
-        let queue = NSOperationQueue.currentQueue()
         let sessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
         let request = NSURLRequest(URL:url)
-        let urlSession = NSURLSession(configuration:sessionConfiguration, delegate: nil, delegateQueue: queue)
+        let urlSession = NSURLSession(configuration:sessionConfiguration, delegate: nil, delegateQueue: nil)
         
         
         _ = urlSession.dataTaskWithRequest(request, completionHandler: {(responseData: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             
             handler(response,responseData,error)
-        })!.resume();
+        }).resume();
         
     }
     

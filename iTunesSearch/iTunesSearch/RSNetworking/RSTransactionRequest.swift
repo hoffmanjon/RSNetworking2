@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 import SystemConfiguration
 
-private func urlEncode(s: String) -> String {
-    return CFURLCreateStringByAddingPercentEscapes(nil, s, nil, "!*'\"();:@&=+$,/?%#[]", CFStringBuiltInEncodings.UTF8.rawValue) as String
+private func urlEncode(s: String) -> String? {
+    return s.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
 }
 
 class RSTransactionRequest: NSObject {
@@ -35,8 +35,7 @@ class RSTransactionRequest: NSObject {
     
     private func dataFromRSTransactionPost(transaction: RSTransaction, completionHandler handler: dataFromRSTransactionCompletionClosure)
     {
-        
-        let queue = NSOperationQueue()
+
         let sessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
         
         let urlString = transaction.getFullURLString()
@@ -47,7 +46,7 @@ class RSTransactionRequest: NSObject {
         let params = dictionaryToQueryString(transaction.parameters)
         request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
         
-        let urlSession = NSURLSession(configuration:sessionConfiguration, delegate: nil, delegateQueue: queue)
+        let urlSession = NSURLSession(configuration:sessionConfiguration, delegate: nil, delegateQueue: nil)
         
         urlSession.dataTaskWithRequest(request, completionHandler: {(responseData: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             
@@ -58,7 +57,6 @@ class RSTransactionRequest: NSObject {
     private func dataFromRSTransactionGet(transaction: RSTransaction, completionHandler handler: dataFromRSTransactionCompletionClosure)
     {
         
-        let queue = NSOperationQueue()
         let sessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
         
         let urlString = transaction.getFullURLString() + "?" + dictionaryToQueryString(transaction.parameters)
@@ -66,7 +64,7 @@ class RSTransactionRequest: NSObject {
         
         let request = NSMutableURLRequest(URL:url)
         request.HTTPMethod = "GET"
-        let urlSession = NSURLSession(configuration:sessionConfiguration, delegate: nil, delegateQueue: queue)
+        let urlSession = NSURLSession(configuration:sessionConfiguration, delegate: nil, delegateQueue: nil)
         
         urlSession.dataTaskWithRequest(request, completionHandler: {(responseData: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             
@@ -131,7 +129,9 @@ class RSTransactionRequest: NSObject {
     private func dictionaryToQueryString(dict: [String : String]) -> String {
         var parts = [String]()
         for (key, value) in dict {
-            parts.append(urlEncode(key) + "=" + urlEncode(value));
+            if let keyEncoded = urlEncode(key), valueEncoded = urlEncode(value) {
+                parts.append(keyEncoded + "=" + valueEncoded);
+            }
         }
         return parts.joinWithSeparator("&")
 
